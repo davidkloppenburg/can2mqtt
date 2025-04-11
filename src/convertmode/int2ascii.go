@@ -56,11 +56,11 @@ func (i2a Int2Ascii) ToCan(input []byte) (can.Frame, error) {
 		}
 		switch i2a.bits {
 		case 64:
-			binary.LittleEndian.PutUint64(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint64(res))
+			binary.BigEndian.PutUint64(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint64(res))
 		case 32:
-			binary.LittleEndian.PutUint32(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint32(res))
+			binary.BigEndian.PutUint32(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint32(res))
 		case 16:
-			binary.LittleEndian.PutUint16(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint16(res))
+			binary.BigEndian.PutUint16(ret.Data[i*bytePerNumber:(i+1)*bytePerNumber], uint16(res))
 		case 8:
 			ret.Data[i] = uint8(res)
 		}
@@ -86,11 +86,11 @@ func (i2a Int2Ascii) ToMqtt(input can.Frame) ([]byte, error) {
 	for i := uint(0); i < i2a.instances; i++ {
 		switch i2a.bits {
 		case 64:
-			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.LittleEndian.Uint64(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
+			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.BigEndian.Uint64(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
 		case 32:
-			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.LittleEndian.Uint32(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
+			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.BigEndian.Uint32(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
 		case 16:
-			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.LittleEndian.Uint16(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
+			returnStrings = append(returnStrings, strconv.FormatInt(int64(binary.BigEndian.Uint16(input.Data[i*bytePerNumber:(i+1)*bytePerNumber])), 10))
 		case 8:
 			returnStrings = append(returnStrings, strconv.FormatInt(int64(input.Data[i]), 10))
 		}
